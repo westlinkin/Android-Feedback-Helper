@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-include ':sample', ':android-feedback-helper'
+package com.westlinkin.android_feedback_helper_sample;
+
+import android.app.Application;
+
+import com.westlinkin.android_feedback_helper.FeedbackHelper;
+
+/**
+ * Created by Wesley Lin on 3/17/15.
+ */
+public class MyApplication extends Application {
+
+    private static final String FEEDBACK_EMAIL_ADDRESS = "";
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        FeedbackHelper.getInstance().init(FEEDBACK_EMAIL_ADDRESS);
+    }
+}
