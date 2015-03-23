@@ -18,6 +18,7 @@ package com.westlinkin.android_feedback_helper_sample;
 
 import android.app.Application;
 
+import com.westlinkin.android_feedback_helper.Configuration;
 import com.westlinkin.android_feedback_helper.FeedbackHelper;
 
 /**
@@ -31,6 +32,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        FeedbackHelper.getInstance().init(FEEDBACK_EMAIL_ADDRESS);
+        Configuration config = Configuration.getDefaultConfiguration(FEEDBACK_EMAIL_ADDRESS);
+        FeedbackHelper.getInstance().init(config);
     }
 }

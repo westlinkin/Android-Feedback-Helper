@@ -16,6 +16,7 @@
 
 package com.westlinkin.android_feedback_helper;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -28,7 +29,7 @@ public class FeedbackHelper {
 
     private static FeedbackHelper instance;
 
-    private String feedbackEmailAddress;
+    private Configuration configuration;
 
     public static FeedbackHelper getInstance() {
         if (instance == null) {
@@ -48,11 +49,11 @@ public class FeedbackHelper {
      * If feedback eamil address was set before ( {@link #isInited()} == true) then this method does nothing.<br />
      * To force initialization with new feedback email address you should {@linkplain #destroy() destroy ImageLoader} at first.
      *
-     * @param feedbackEmailAddress the email address the feedback email was sent to
+     * @param configuration {@linkplain Configuration FeedbackHelper configuration}
      */
-    public synchronized void init(String feedbackEmailAddress) {
-        if (this.feedbackEmailAddress == null) {
-            this.feedbackEmailAddress = feedbackEmailAddress;
+    public synchronized void init(Configuration configuration) {
+        if (this.configuration == null) {
+            this.configuration = configuration;
         } else {
             Log.w(TAG, WARNING_RE_INIT_CONFIG);
         }
@@ -62,17 +63,27 @@ public class FeedbackHelper {
      * Returns <b>true</b> - if FeedbackHelper is initialized; <b>false</b> - otherwise
      */
     public boolean isInited() {
-        return feedbackEmailAddress != null;
+        return configuration != null;
     }
 
     /**
-     * You can {@linkplain #init(String) init} FeedbackHelper with new feedback email address after calling this
+     * You can {@linkplain #init(Configuration) init} FeedbackHelper with new feedback email address after calling this
      * method.
      */
     public void destroy() {
-        if (feedbackEmailAddress != null) {
-            feedbackEmailAddress = null;
+        if (configuration != null) {
+            configuration = null;
         }
     }
 
+    /**
+     * Show a feedback dialog, let user to send feedback messages
+     * @param context The Context where the send feedback action happens
+     * @param feedbackMsg the content of the feedback
+     * @param showToast whether show a toast after the feedback message was sent
+     * @param addAttachment whether add the content of the feedback, including device information as attachment
+     */
+    public void sendFeedback(Context context, String feedbackMsg, boolean showToast, boolean addAttachment) {
+
+    }
 }

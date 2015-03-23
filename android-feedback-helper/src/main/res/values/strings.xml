@@ -16,4 +16,7 @@
 
 <resources>
     <string name="app_name">Android-Feedback-Helper</string>
+
+    <string name="afh_email_name"></string>
+    <string name="afh_email_pwd"></string>
 </resources>
