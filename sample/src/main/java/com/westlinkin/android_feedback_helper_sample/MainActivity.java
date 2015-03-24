@@ -16,18 +16,31 @@
 
 package com.westlinkin.android_feedback_helper_sample;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
+import com.westlinkin.android_feedback_helper.FeedbackHelper;
 
 public class MainActivity extends ActionBarActivity {
+
+    protected FeedbackHelper feedbackHelper = FeedbackHelper.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnSendFeedback = (Button) findViewById(R.id.btn_send_feedback);
+        btnSendFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendFeedback();
+            }
+        });
     }
 
     @Override
@@ -45,10 +58,16 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_send_feedback) {
+            sendFeedback();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void sendFeedback() {
+        feedbackHelper.sendFeedback(this, "test msg", true, false);
+    }
+
 }

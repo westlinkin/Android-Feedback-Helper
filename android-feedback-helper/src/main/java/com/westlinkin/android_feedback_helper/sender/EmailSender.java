@@ -39,7 +39,6 @@ import javax.mail.internet.MimeMessage;
 public class EmailSender extends Authenticator {
     private static final String MAIL_HOST = "smtp.gmail.com";
 
-
     private Session session;
     private Context context;
 
