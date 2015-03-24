@@ -16,7 +16,9 @@
 
 package com.westlinkin.android_feedback_helper.utils;
 
-import java.util.Date;
+import com.westlinkin.android_feedback_helper.Configuration;
+
+import java.util.Calendar;
 import java.util.IllegalFormatException;
 
 /**
@@ -29,19 +31,28 @@ public class MailUntils {
 
     public static String getMailSubject(String appName) {
         try {
-            return String.format(MAIL_SUBJECT, appName, String.valueOf(new Date().getTime()));
+            return String.format(MAIL_SUBJECT, appName, getFeedbackNumber());
         } catch (IllegalFormatException e) {
             return String.format(MAIL_SUBJECT, "Unknown app", "0000");
         }
     }
 
-    // todo: fill the processor
-    public static String emailPwdProcessor(String pwdInValue) {
-        return "";
+    private static String getFeedbackNumber() {
+        Calendar calendar = Calendar.getInstance();
+        return "" + calendar.get(Calendar.YEAR)
+                + Utils.formatCalendarIntValue((calendar.get(Calendar.MONTH) + 1), 2)
+                + Utils.formatCalendarIntValue(calendar.get(Calendar.DAY_OF_MONTH), 2)
+                + Utils.formatCalendarIntValue(calendar.get(Calendar.HOUR_OF_DAY), 2)
+                + Utils.formatCalendarIntValue(calendar.get(Calendar.MINUTE), 2)
+                + Utils.formatCalendarIntValue(calendar.get(Calendar.SECOND), 2)
+                + "." + Utils.formatCalendarIntValue(calendar.get(Calendar.MILLISECOND), 3);
     }
 
-    // todo: fill the processor
+    public static String emailPwdProcessor(String pwdInValue) {
+        return Utils.getHashMD5(pwdInValue);
+    }
+
     public static String emailNameProcessor(String nameInValue) {
-        return "";
+        return nameInValue + Configuration.DOMAIN_GMAIL;
     }
 }

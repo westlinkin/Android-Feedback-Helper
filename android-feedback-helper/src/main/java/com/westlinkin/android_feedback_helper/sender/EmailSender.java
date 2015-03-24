@@ -67,7 +67,8 @@ public class EmailSender extends Authenticator {
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(
                 MailUntils.emailNameProcessor(context.getString(R.string.afh_email_name)),
-                MailUntils.emailPwdProcessor(context.getString(R.string.afh_email_pwd)));
+                MailUntils.emailPwdProcessor(context.getString(R.string.afh_email_pwd))
+        );
     }
 
     /**
@@ -77,7 +78,7 @@ public class EmailSender extends Authenticator {
      * @param recipients where the feedback email is sent to, could be multiple addresses, split by comma
      * @throws Exception
      */
-    public synchronized void send(String appName, String body, String recipients) throws Exception {
+    public void send(String appName, String body, String recipients) throws Exception {
         try {
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
