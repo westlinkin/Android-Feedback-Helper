@@ -28,16 +28,19 @@ public class Configuration {
 
     private String feedbackEmailAddress;
     private String[] emailDomains;
+    private int feedbackTheme;
 
     Configuration(String feedbackEmailAddress) {
         this.feedbackEmailAddress = feedbackEmailAddress;
-        this.emailDomains = new String[]{
+        setEmailDomains(new String[]{
                 DOMAIN_GMAIL,
                 DOMAIN_HOTMAIL,
                 DOMAIN_YAHOO,
                 DOMAIN_OUTLOOK,
                 DOMAIN_AOL,
-        };
+            });
+
+        setFeedbackTheme(0);
     }
 
     public void setEmailDomains(String[] emailDomains) {
@@ -46,6 +49,19 @@ public class Configuration {
 
     public String[] getEmailDomains() {
         return emailDomains;
+    }
+
+    /**
+     * set FeedbackDialog{@link com.westlinkin.android_feedback_helper.ui.FeedbackDialog} theme
+     * @param feedbackTheme the theme of the feedback dialog; if 0, an appropriate theme (based on the style)
+     *                      will be selected for your
+     */
+    public void setFeedbackTheme(int feedbackTheme) {
+        this.feedbackTheme = feedbackTheme;
+    }
+
+    public int getFeedbackTheme() {
+        return feedbackTheme;
     }
 
     public static Configuration getDefaultConfiguration(String feedbackEmailAddress) {
