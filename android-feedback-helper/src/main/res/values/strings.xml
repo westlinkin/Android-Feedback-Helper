@@ -19,4 +19,6 @@
 
     <string name="afh_email_name">AndroidFeedbackHelper</string>
     <string name="afh_email_pwd">J*lmp9W2IEO9Hi</string>
+
+    <string name="afh_positive_btn">Send</string>
 </resources>

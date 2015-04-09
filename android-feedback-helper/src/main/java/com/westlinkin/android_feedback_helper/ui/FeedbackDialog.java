@@ -16,10 +16,51 @@
 
 package com.westlinkin.android_feedback_helper.ui;
 
-import android.support.v4.app.DialogFragment;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.os.Bundle;
+
+import com.westlinkin.android_feedback_helper.R;
 
 /**
  * Created by Wesley Lin on 3/24/15.
  */
 public class FeedbackDialog extends DialogFragment {
+
+    public static FeedbackDialog getInstance() {
+        return new FeedbackDialog();
+    }
+
+    public interface OnDialogButtonsClickListener {
+        void onSendClicked(String feedbackMessage);
+    }
+
+    private OnDialogButtonsClickListener onDialogButtonsClickListener;
+
+    public void setOnDialogButtonsClickListener(OnDialogButtonsClickListener onDialogButtonsClickListener) {
+        this.onDialogButtonsClickListener = onDialogButtonsClickListener;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        Dialog dialog = builder.create();
+
+
+
+        builder.setPositiveButton(getString(R.string.afh_positive_btn), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (onDialogButtonsClickListener == null)
+                    return;
+
+                // todo: pass msg
+                onDialogButtonsClickListener.onSendClicked("test msg");
+            }
+        });
+        return dialog;
+    }
 }

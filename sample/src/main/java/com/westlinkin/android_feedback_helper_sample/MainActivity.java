@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void sendFeedback() {
-        feedbackHelper.sendFeedback(this, "test msg", true, false);
+        feedbackHelper.showFeedbackDialog(this, true, false);
     }
 
 }

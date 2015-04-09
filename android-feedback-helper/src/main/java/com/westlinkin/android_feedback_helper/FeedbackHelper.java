@@ -16,8 +16,12 @@
 
 package com.westlinkin.android_feedback_helper;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.DialogFragment;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.westlinkin.android_feedback_helper.ui.FeedbackDialog;
 
 /**
  * Created by Wesley Lin on 3/17/15.
@@ -78,12 +82,21 @@ public class FeedbackHelper {
 
     /**
      * Show a feedback dialog, let user to send feedback messages
-     * @param context The Context where the send feedback action happens
-     * @param feedbackMsg the content of the feedback
+     * @param activity The Activity where the send feedback action happens
      * @param showToast whether show a toast after the feedback message was sent
      * @param addAttachment whether add the content of the feedback, including device information as attachment
      */
-    public void sendFeedback(Context context, String feedbackMsg, boolean showToast, boolean addAttachment) {
+    public void showFeedbackDialog(final Activity activity, final boolean showToast, final boolean addAttachment) {
+        FeedbackDialog feedbackDialog = FeedbackDialog.getInstance();
 
+        feedbackDialog.setOnDialogButtonsClickListener(new FeedbackDialog.OnDialogButtonsClickListener() {
+            @Override
+            public void onSendClicked(String feedbackMessage) {
+                // todo: actually sending email
+                Toast.makeText(activity, "lalala", Toast.LENGTH_SHORT).show();
+            }
+        });
+        feedbackDialog.setStyle(DialogFragment.STYLE_NORMAL, configuration.getFeedbackTheme());
+        feedbackDialog.show(activity.getFragmentManager(), "feedback-dialog");
     }
 }
