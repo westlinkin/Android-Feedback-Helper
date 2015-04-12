@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Wesley Lin
   ~
@@ -15,16 +16,6 @@
   -->
 
 <resources>
-    <string name="app_name">Android-Feedback-Helper</string>
-
-    <string name="afh_email_name">AndroidFeedbackHelper</string>
-    <string name="afh_email_pwd">J*lmp9W2IEO9Hi</string>
-
-    <string name="afh_positive_btn">Send</string>
-
-    <string name="afh_dialog_title">Feedback</string>
-
-    <string name="afh_dialog_text_hint">Your feedback here</string>
-    <string name="afh_email_origin">Sent from:</string>
-    <string name="afh_email_hint">Your email address here</string>
+    <dimen name="afh_dialog_padding_left">22dp</dimen>
+    <dimen name="afh_dialog_padding_right">16dp</dimen>
 </resources>

@@ -1,0 +1,68 @@
+<!--
+  ~ Copyright 2015 Wesley Lin
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/afh_dialog_padding_left"
+                android:paddingRight="@dimen/afh_dialog_padding_right">
+
+    <EditText
+        android:id="@+id/afh_feedback_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/afh_dialog_text_hint"
+        android:gravity="bottom"
+        android:lines="3">
+        <requestFocus/>
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/afh_email_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:layout_below="@id/afh_feedback_edittext"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/afh_email_origin"
+            android:textSize="@dimen/afh_dialog_textsize"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="8dp"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/afh_email_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/afh_dialog_textsize"
+            android:inputType="textEmailAddress"
+            android:gravity="bottom"
+            android:visibility="visible"
+            android:hint="@string/afh_email_hint"/>
+
+        <Spinner
+            android:id="@+id/afh_email_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

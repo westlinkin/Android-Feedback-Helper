@@ -29,7 +29,8 @@ import com.westlinkin.android_feedback_helper.ui.FeedbackDialog;
 public class FeedbackHelper {
 
     private static final String TAG = FeedbackHelper.class.getSimpleName();
-    private static final String WARNING_RE_INIT_CONFIG = "Try to initialize FeedbackHelper which had already been initialized before. " + "To re-init FeedbackHelper with new feedback email address call FeedbackHelper.destroy() at first.";
+    private static final String WARNING_RE_INIT_CONFIG = "Try to initialize FeedbackHelper which had already been initialized before. "
+            + "To re-init FeedbackHelper with new feedback email address call FeedbackHelper.destroy() at first.";
 
     private static FeedbackHelper instance;
 
@@ -93,7 +94,7 @@ public class FeedbackHelper {
             @Override
             public void onSendClicked(String feedbackMessage) {
                 // todo: actually sending email
-                Toast.makeText(activity, "lalala", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, feedbackMessage, Toast.LENGTH_SHORT).show();
             }
         });
         feedbackDialog.setStyle(DialogFragment.STYLE_NORMAL, configuration.getFeedbackTheme());
