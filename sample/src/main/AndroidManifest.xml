@@ -18,6 +18,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.westlinkin.android_feedback_helper_sample" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- OPTIONAL -->
+    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS"/>-->
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
