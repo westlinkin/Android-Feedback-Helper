@@ -18,5 +18,5 @@
 <resources>
     <dimen name="afh_dialog_padding_left">16dp</dimen>
     <dimen name="afh_dialog_padding_right">16dp</dimen>
-    <dimen name="afh_dialog_textsize">16sp</dimen>
+    <dimen name="afh_dialog_textsize">15sp</dimen>
 </resources>

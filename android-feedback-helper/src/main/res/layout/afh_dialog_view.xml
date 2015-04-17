@@ -44,8 +44,7 @@
             android:layout_height="wrap_content"
             android:text="@string/afh_email_origin"
             android:textSize="@dimen/afh_dialog_textsize"
-            android:textColor="@android:color/black"
-            android:layout_marginRight="8dp"/>
+            android:textColor="@android:color/black"/>
 
         <AutoCompleteTextView
             android:id="@+id/afh_email_edittext"
@@ -55,6 +54,7 @@
             android:inputType="textEmailAddress"
             android:gravity="bottom"
             android:visibility="visible"
+            android:layout_marginLeft="8dp"
             android:hint="@string/afh_email_hint"/>
 
         <Spinner

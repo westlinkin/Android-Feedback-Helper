@@ -30,6 +30,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,12 +105,13 @@ public class FeedbackDialog extends DialogFragment {
 
             emailEditText.setAdapter(new EmailFilterAdapter(getActivity(), android.R.layout.simple_list_item_1,
                     new ArrayList<String>(Arrays.asList(emailDomains))));
-
         } else {
             emailEditText.setVisibility(View.GONE);
             emailSpinner.setVisibility(View.VISIBLE);
 
-
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getAccountNames(googleAccounts));
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            emailSpinner.setAdapter(adapter);
         }
 
         feedbackMsg.addTextChangedListener(new TextWatcher() {
@@ -134,8 +136,7 @@ public class FeedbackDialog extends DialogFragment {
                 if (useEditText) {
                     userEmailAddress = emailEditText.getText().toString().trim();
                 } else {
-                    //todo: get email address from spinner
-//                    userEmailAddress = emailSpinner.getSelectedItem()
+                    userEmailAddress = emailSpinner.getSelectedItem().toString();
                 }
                 onDialogButtonsClickListener.onSendClicked(feedbackMsg.getText().toString().trim(), userEmailAddress);
             }
@@ -165,5 +166,13 @@ public class FeedbackDialog extends DialogFragment {
     private static Account[] getAccounts(Context context) {
         AccountManager accountManager = AccountManager.get(context);
         return accountManager.getAccountsByType("com.google");
+    }
+
+    private static String[] getAccountNames(Account[] accounts) {
+        String[] accountNames = new String[accounts.length];
+        for (int i = 0; i < accounts.length; i++) {
+            accountNames[i] = accounts[i].name;
+        }
+        return accountNames;
     }
 }
