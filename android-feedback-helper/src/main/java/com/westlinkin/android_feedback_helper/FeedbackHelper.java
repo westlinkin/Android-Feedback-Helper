@@ -95,6 +95,7 @@ public class FeedbackHelper {
             public void onSendClicked(String feedbackMessage, String userEmailAddress) {
                 // todo: actually sending email
                 Toast.makeText(activity, "msg: " + feedbackMessage + "\nfrom: " + userEmailAddress, Toast.LENGTH_SHORT).show();
+
             }
         });
         feedbackDialog.setStyle(DialogFragment.STYLE_NORMAL, configuration.getFeedbackTheme());

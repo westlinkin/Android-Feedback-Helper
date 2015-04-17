@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/afh_email_origin"
+            android:layout_marginLeft="4dp"
             android:textSize="@dimen/afh_dialog_textsize"
             android:textColor="@android:color/black"/>
 
@@ -54,7 +55,7 @@
             android:inputType="textEmailAddress"
             android:gravity="bottom"
             android:visibility="visible"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="4dp"
             android:hint="@string/afh_email_hint"/>
 
         <Spinner
