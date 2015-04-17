@@ -23,7 +23,7 @@ public class Configuration {
     public static final String DOMAIN_GMAIL = "@gmail.com";
     public static final String DOMAIN_HOTMAIL = "@hotmail.com";
     public static final String DOMAIN_YAHOO = "@yahoo.com";
-    public static final String DOMAIN_OUTLOOK = "@gmail.com";
+    public static final String DOMAIN_OUTLOOK = "@outlook.com";
     public static final String DOMAIN_AOL = "@aol.com";
 
     private String feedbackEmailAddress;

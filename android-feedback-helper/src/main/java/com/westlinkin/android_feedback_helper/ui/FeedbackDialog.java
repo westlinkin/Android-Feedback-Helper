@@ -16,33 +16,48 @@
 
 package com.westlinkin.android_feedback_helper.ui;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.westlinkin.android_feedback_helper.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Wesley Lin on 3/24/15.
  */
 public class FeedbackDialog extends DialogFragment {
     private static final String TAG = "FeedbackDialog";
+    private static final String ACCOUNT_PERMISSION_NAME = "android.permission.GET_ACCOUNTS";
+    private static final String EMAIL_DOMAINS = "email_domains";
 
-    public static FeedbackDialog getInstance() {
-        return new FeedbackDialog();
+    public static FeedbackDialog getInstance(String[] emailDomains) {
+        FeedbackDialog feedbackDialog = new FeedbackDialog();
+        Bundle args = new Bundle();
+        args.putStringArray(EMAIL_DOMAINS, emailDomains);
+        feedbackDialog.setArguments(args);
+        return feedbackDialog;
     }
 
     public interface OnDialogButtonsClickListener {
-        void onSendClicked(String feedbackMessage);
+        void onSendClicked(String feedbackMessage, String userEmailAddress);
     }
 
     private OnDialogButtonsClickListener onDialogButtonsClickListener;
@@ -51,6 +66,14 @@ public class FeedbackDialog extends DialogFragment {
         this.onDialogButtonsClickListener = onDialogButtonsClickListener;
     }
 
+    private String[] emailDomains;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        emailDomains = getArguments().getStringArray(EMAIL_DOMAINS);
+    }
+
+    private boolean useEditText = true;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -58,10 +81,36 @@ public class FeedbackDialog extends DialogFragment {
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.afh_dialog_view, null);
         final EditText feedbackMsg = (EditText) view.findViewById(R.id.afh_feedback_edittext);
-        final EditText emailEditText = (EditText) view.findViewById(R.id.afh_email_edittext);
+        final AutoCompleteTextView emailEditText = (AutoCompleteTextView) view.findViewById(R.id.afh_email_edittext);
         final Spinner emailSpinner = (Spinner) view.findViewById(R.id.afh_email_spinner);
 
-        // todo: if permission allowed, use emailSpinner, hide emailEditText
+        // permission check, use Spinner or EditText
+        PackageManager pm = getActivity().getPackageManager();
+        boolean accountPermissionGranted = (PackageManager.PERMISSION_GRANTED == pm.checkPermission(ACCOUNT_PERMISSION_NAME, getActivity().getPackageName()));
+        Account[] googleAccounts = null;
+        Log.d(TAG, "accountPermissionGranted: " + accountPermissionGranted);
+        if (accountPermissionGranted) {
+            googleAccounts = getAccounts(getActivity());
+        }
+
+        if (googleAccounts != null && googleAccounts.length > 0) {
+            useEditText = false;
+        }
+
+        // set ui based on {@link useEditText}
+        if (useEditText) {
+            emailEditText.setVisibility(View.VISIBLE);
+            emailSpinner.setVisibility(View.GONE);
+
+            emailEditText.setAdapter(new EmailFilterAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                    new ArrayList<String>(Arrays.asList(emailDomains))));
+
+        } else {
+            emailEditText.setVisibility(View.GONE);
+            emailSpinner.setVisibility(View.VISIBLE);
+
+
+        }
 
         feedbackMsg.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,8 +130,14 @@ public class FeedbackDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 if (onDialogButtonsClickListener == null)
                     return;
-
-                onDialogButtonsClickListener.onSendClicked(feedbackMsg.getText().toString());
+                String userEmailAddress = "";
+                if (useEditText) {
+                    userEmailAddress = emailEditText.getText().toString().trim();
+                } else {
+                    //todo: get email address from spinner
+//                    userEmailAddress = emailSpinner.getSelectedItem()
+                }
+                onDialogButtonsClickListener.onSendClicked(feedbackMsg.getText().toString().trim(), userEmailAddress);
             }
         });
 
@@ -105,5 +160,10 @@ public class FeedbackDialog extends DialogFragment {
         if (sendButton == null)
             return;
         sendButton.setEnabled(enable);
+    }
+
+    private static Account[] getAccounts(Context context) {
+        AccountManager accountManager = AccountManager.get(context);
+        return accountManager.getAccountsByType("com.google");
     }
 }

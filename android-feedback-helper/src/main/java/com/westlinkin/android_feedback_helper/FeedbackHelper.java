@@ -88,13 +88,13 @@ public class FeedbackHelper {
      * @param addAttachment whether add the content of the feedback, including device information as attachment
      */
     public void showFeedbackDialog(final Activity activity, final boolean showToast, final boolean addAttachment) {
-        FeedbackDialog feedbackDialog = FeedbackDialog.getInstance();
+        FeedbackDialog feedbackDialog = FeedbackDialog.getInstance(configuration.getEmailDomains());
 
         feedbackDialog.setOnDialogButtonsClickListener(new FeedbackDialog.OnDialogButtonsClickListener() {
             @Override
-            public void onSendClicked(String feedbackMessage) {
+            public void onSendClicked(String feedbackMessage, String userEmailAddress) {
                 // todo: actually sending email
-                Toast.makeText(activity, feedbackMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "msg: " + feedbackMessage + "\nfrom: " + userEmailAddress, Toast.LENGTH_SHORT).show();
             }
         });
         feedbackDialog.setStyle(DialogFragment.STYLE_NORMAL, configuration.getFeedbackTheme());
