@@ -42,10 +42,12 @@ public class MailUntils {
         return "" + calendar.get(Calendar.YEAR)
                 + Utils.formatCalendarIntValue((calendar.get(Calendar.MONTH) + 1), 2)
                 + Utils.formatCalendarIntValue(calendar.get(Calendar.DAY_OF_MONTH), 2)
+                + "."
                 + Utils.formatCalendarIntValue(calendar.get(Calendar.HOUR_OF_DAY), 2)
                 + Utils.formatCalendarIntValue(calendar.get(Calendar.MINUTE), 2)
                 + Utils.formatCalendarIntValue(calendar.get(Calendar.SECOND), 2)
-                + "." + Utils.formatCalendarIntValue(calendar.get(Calendar.MILLISECOND), 3);
+                + "."
+                + Utils.formatCalendarIntValue(calendar.get(Calendar.MILLISECOND), 3);
     }
 
     public static String emailPwdProcessor(String pwdInValue) {

@@ -18,9 +18,11 @@ package com.westlinkin.android_feedback_helper;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.westlinkin.android_feedback_helper.sender.EmailSender;
 import com.westlinkin.android_feedback_helper.ui.FeedbackDialog;
 
 /**
@@ -84,21 +86,60 @@ public class FeedbackHelper {
     /**
      * Show a feedback dialog, let user to send feedback messages
      * @param activity The Activity where the send feedback action happens
+     * @param appName The name of the App
      * @param showToast whether show a toast after the feedback message was sent
      * @param addAttachment whether add the content of the feedback, including device information as attachment
      */
-    public void showFeedbackDialog(final Activity activity, final boolean showToast, final boolean addAttachment) {
+    public void showFeedbackDialog(final Activity activity, final String appName, final boolean showToast, final boolean addAttachment) {
         FeedbackDialog feedbackDialog = FeedbackDialog.getInstance(configuration.getEmailDomains());
 
         feedbackDialog.setOnDialogButtonsClickListener(new FeedbackDialog.OnDialogButtonsClickListener() {
             @Override
             public void onSendClicked(String feedbackMessage, String userEmailAddress) {
-                // todo: actually sending email
-                Toast.makeText(activity, "msg: " + feedbackMessage + "\nfrom: " + userEmailAddress, Toast.LENGTH_SHORT).show();
-
+                new SendFeedbackTask(activity, showToast).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                        appName, feedbackMessage, userEmailAddress);
             }
         });
         feedbackDialog.setStyle(DialogFragment.STYLE_NORMAL, configuration.getFeedbackTheme());
         feedbackDialog.show(activity.getFragmentManager(), "feedback-dialog");
+    }
+
+    private class SendFeedbackTask extends AsyncTask<String, Void, Boolean> {
+        private Activity activity;
+        private boolean showToast;
+
+        public SendFeedbackTask(Activity activity, boolean showToast) {
+            this.activity = activity;
+            this.showToast = showToast;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String appName = params[0];
+            String msg = params[1];
+            String userEmail = params[2];
+
+            EmailSender emailSender = new EmailSender(activity);
+
+            try {
+                emailSender.send(appName, msg, userEmail, configuration.getFeedbackEmailAddress());
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (!showToast)
+                return;
+            if (aBoolean) {
+                Toast.makeText(activity, activity.getString(R.string.afh_feedback_sent), Toast.LENGTH_SHORT).show();;
+            } else {
+                Toast.makeText(activity, activity.getString(R.string.afh_feedback_sent_error), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

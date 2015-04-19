@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void sendFeedback() {
-        feedbackHelper.showFeedbackDialog(this, true, false);
+        feedbackHelper.showFeedbackDialog(this, getString(R.string.app_name), true, false);
     }
 
 }

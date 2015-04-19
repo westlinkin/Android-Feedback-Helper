@@ -51,6 +51,10 @@ public class Configuration {
         return emailDomains;
     }
 
+    public String getFeedbackEmailAddress() {
+        return feedbackEmailAddress;
+    }
+
     /**
      * set FeedbackDialog{@link com.westlinkin.android_feedback_helper.ui.FeedbackDialog} theme
      * @param feedbackTheme the theme of the feedback dialog; if 0, an appropriate theme (based on the style)
@@ -64,6 +68,12 @@ public class Configuration {
         return feedbackTheme;
     }
 
+    /**
+     * init {@link Configuration} with a feedbackEmailAddress
+     * @param feedbackEmailAddress the email that feedbacks are sent to,
+     *                             it could be multiple email addresses, split by comma
+     * @return a default {@link Configuration}
+     */
     public static Configuration getDefaultConfiguration(String feedbackEmailAddress) {
         return new Configuration(feedbackEmailAddress);
     }

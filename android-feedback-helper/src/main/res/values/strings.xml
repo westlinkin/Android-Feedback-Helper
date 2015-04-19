@@ -27,4 +27,6 @@
     <string name="afh_dialog_text_hint">Your feedback here</string>
     <string name="afh_email_origin">Sent from:</string>
     <string name="afh_email_hint">Your email address here</string>
+    <string name="afh_feedback_sent">Feedback sent</string>
+    <string name="afh_feedback_sent_error">Feedback sent error</string>
 </resources>

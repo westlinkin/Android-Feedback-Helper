@@ -73,14 +73,15 @@ public class EmailSender extends Authenticator {
     /**
      * where feedback email is really sent
      * @param appName your app_name
-     * @param body the feedback content
+     * @param msg the feedback content
+     * @param userEmail user's email address written in the {@link com.westlinkin.android_feedback_helper.ui.FeedbackDialog}
      * @param recipients where the feedback email is sent to, could be multiple addresses, split by comma
      * @throws Exception
      */
-    public void send(String appName, String body, String recipients) throws Exception {
+    public void send(String appName, String msg, String userEmail, String recipients) throws Exception {
         try {
             MimeMessage message = new MimeMessage(session);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(msg.getBytes(), "text/plain"));
             message.setFrom(new InternetAddress(MailUntils.emailNameProcessor(context.getString(R.string.afh_email_name))));
             message.setSubject(MailUntils.getMailSubject(appName));
             message.setDataHandler(handler);

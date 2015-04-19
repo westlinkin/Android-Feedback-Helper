@@ -26,7 +26,7 @@ import com.westlinkin.android_feedback_helper.FeedbackHelper;
  */
 public class MyApplication extends Application {
 
-    private static final String FEEDBACK_EMAIL_ADDRESS = "";
+    private static final String FEEDBACK_EMAIL_ADDRESS = "westlinkin@gmail.com";
 
     @Override
     public void onCreate() {
