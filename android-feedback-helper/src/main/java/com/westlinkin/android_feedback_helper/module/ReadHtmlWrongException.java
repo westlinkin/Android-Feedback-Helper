@@ -14,28 +14,14 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+package com.westlinkin.android_feedback_helper.module;
 
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.0"
+/**
+ * Created by Wesley Lin on 4/20/15.
+ */
+public class ReadHtmlWrongException extends Exception {
 
-    defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0.0"
+    public ReadHtmlWrongException(String detailMessage) {
+        super(detailMessage);
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'commons-io:commons-io:2.4'
 }

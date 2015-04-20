@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Feedback-Helper</title>
+    </head>
+    <style>
+		div {
+			margin: 8px;
+			font-family: 'trebuchet MS', 'lucida sans';
+		}
+		a {
+			margin: 8px;
+			font-family: 'trebuchet MS', 'lucida sans';
+		}
+		table.dataintable {
+			margin: 8px;
+			margin-top: 32px;
+		    border: 1px solid #888888;
+		    border-collapse: collapse;
+		    font-family: 'trebuchet MS', 'lucida sans';
+			width: 92%;
+		}
+		table.dataintable th {
+		    background-color: #CCCCCC;
+		    border: 1px solid #888888;
+		    padding: 5px 15px 5px 5px;
+		    text-align: left;
+		    vertical-align: baseline;
+		}
+		table.dataintable td {
+		    background-color: #EFEFEF;
+		    border: 1px solid #AAAAAA;
+		    padding: 5px 15px 5px 5px;
+		    vertical-align: text-top;
+		}
+	</style>
+    <body>
+        <br/>
+        <div>App: __APP_PACKAGE__; <br/>Version: __VERSION_NAME__(build __VERSION_CODE__)</div>
+        <div>Time: __FEEDBACK_TIME__</div>
+        
+        <div><br/>Feedback Message:</div>
+        <div style="word-wrap: break-word; word-break: normal;">__FEEDBACK_MESSAGE__</div>
+        <a href="mailto:__USER_EMAIL__">Reply to the user</a> 
+        
+        <br/>
+        <table  class="dataintable">
+        	<tbody>
+            	<tr>
+              		<td align="right">2123</td>
+	                <td>8490898</td>
+            	</tr>
+            	<tr>
+              		<td align="right">1</td>
+              		<td>ffffffff</td>
+            	</tr>
+            	<tr>
+              		<td align="right">fjd</td>
+              		<td>fdjkaljfkdsajkl</td>
+            	</tr>
+          	</tbody>
+        </table>
+    </body>
+</html>

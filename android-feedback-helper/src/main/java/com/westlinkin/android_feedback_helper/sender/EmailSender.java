@@ -19,6 +19,7 @@ package com.westlinkin.android_feedback_helper.sender;
 import android.content.Context;
 
 import com.westlinkin.android_feedback_helper.R;
+import com.westlinkin.android_feedback_helper.module.ReadHtmlWrongException;
 import com.westlinkin.android_feedback_helper.utils.MailUntils;
 
 import java.security.Security;
@@ -79,20 +80,19 @@ public class EmailSender extends Authenticator {
      * @throws Exception
      */
     public void send(String appName, String msg, String userEmail, String recipients) throws Exception {
-        try {
-            MimeMessage message = new MimeMessage(session);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(msg.getBytes(), "text/plain"));
-            message.setFrom(new InternetAddress(MailUntils.emailNameProcessor(context.getString(R.string.afh_email_name))));
-            message.setSubject(MailUntils.getMailSubject(appName));
-            message.setDataHandler(handler);
-            if (recipients.indexOf(',') > 0)
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
-            else
-                message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
-            Transport.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        MimeMessage message = new MimeMessage(session);
+        String body = MailUntils.getMailBody(context, msg, userEmail);
+        if (body == null)
+            throw new ReadHtmlWrongException("Read html feedback template error");
+        DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/html"));
+        message.setFrom(new InternetAddress(MailUntils.emailNameProcessor(context.getString(R.string.afh_email_name))));
+        message.setSubject(MailUntils.getMailSubject(appName));
+        message.setDataHandler(handler);
+        if (recipients.indexOf(',') > 0)
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
+        else
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
+        Transport.send(message);
     }
 
 }

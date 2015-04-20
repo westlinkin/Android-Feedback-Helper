@@ -14,28 +14,18 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
+package com.westlinkin.android_feedback_helper.module;
 
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.0"
+/**
+ * Created by Wesley Lin on 4/20/15.
+ */
+public class Data {
+    public static final String APP_PACKAGE = "__APP_PACKAGE__";
+    public static final String VERSION_NAME = "__VERSION_NAME__";
+    public static final String VERSION_CODE = "__VERSION_CODE__";
+    public static final String FEEDBACK_TIME = "__FEEDBACK_TIME__";
+    public static final String FEEDBACK_MESSAGE = "__FEEDBACK_MESSAGE__";
+    public static final String USER_EMAIL = "__USER_EMAIL__";
 
-    defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0.0"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-}
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'commons-io:commons-io:2.4'
 }

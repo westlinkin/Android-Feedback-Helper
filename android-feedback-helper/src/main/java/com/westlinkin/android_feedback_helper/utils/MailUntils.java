@@ -16,9 +16,19 @@
 
 package com.westlinkin.android_feedback_helper.utils;
 
-import com.westlinkin.android_feedback_helper.Configuration;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
+import com.westlinkin.android_feedback_helper.Configuration;
+import com.westlinkin.android_feedback_helper.module.Data;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.IllegalFormatException;
 
 /**
@@ -56,5 +66,41 @@ public class MailUntils {
 
     public static String emailNameProcessor(String nameInValue) {
         return nameInValue + Configuration.DOMAIN_GMAIL;
+    }
+
+    public static String getMailBody(Context context, String msg, String userEmail) {
+        String html = "";
+        try {
+            html = IOUtils.toString(context.getAssets().open("android_feedback_helper.html"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (html.isEmpty())
+            return null;
+
+        // version name and code
+        PackageManager packageManager = context.getPackageManager();
+        String versionName = "Unknown";
+        int versionCode = -1;
+        if (packageManager != null) {
+            try {
+                PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+                versionName = packageInfo.versionName;
+                versionCode = packageInfo.versionCode;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd_HH.mm.ss_zzz");
+        String time = sdf.format(now);
+
+        return html.replaceAll(Data.APP_PACKAGE, context.getPackageName())
+                .replaceAll(Data.VERSION_NAME, versionName)
+                .replaceAll(Data.VERSION_CODE, String.valueOf(versionCode))
+                .replaceAll(Data.FEEDBACK_TIME, time)
+                .replaceAll(Data.FEEDBACK_MESSAGE, msg)
+                .replaceAll(Data.USER_EMAIL, userEmail);
     }
 }
